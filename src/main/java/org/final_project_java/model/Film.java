@@ -2,6 +2,8 @@ package org.final_project_java.model;
 
 
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -108,7 +110,7 @@ public class Film {
         return categories;
     }
 
-    public void setCategories(java.util.List<Category> categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 
@@ -118,8 +120,7 @@ public class Film {
 
     public void setDirector(Director director) {
         this.director = director;
-    }
-    
+    }    
     
 
 }

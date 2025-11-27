@@ -1,6 +1,6 @@
 package org.final_project_java.repository;
 
-import java.util.Locale.Category;
+import org.final_project_java.model.Category;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
