@@ -2,13 +2,16 @@ package org.final_project_java.model;
 
 import java.util.List;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
-
+@Entity
+@Table(name = "directors")
 public class Director {
     
     /* SEZIONE RIGHE  */
@@ -25,8 +28,10 @@ public class Director {
     @NotBlank(message = "age cannot be null")
     @Positive(message = "age must be greater than 0")
     private Integer age;
+
+    
     /* SEZIONE COLLEGAMENTI */
-    @OneToMany(mappedBy = "directors")
+    @OneToMany(mappedBy = "director")
     private List<Film> films;
 
 
@@ -68,6 +73,14 @@ public class Director {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public List<Film> getFilms() {
+        return films;
+    }
+
+    public void setFilms(List<Film> films) {
+        this.films = films;
     }
 
     

@@ -8,7 +8,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
@@ -46,13 +48,15 @@ public class Film {
     /* SEZIONE COLLEGAMENTI */
     @ManyToOne
     @JoinColumn(name = "director_id", nullable = false)
-    private Film film;
-    
+    private Director director;
 
-
-
-
-
+    @ManyToMany
+    @JoinTable(
+        name = "films_categories",
+        joinColumns =  @JoinColumn(name = "film_id"),
+        inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private java.util.List<Category> categories;
 
     /* SEZIONE GETTER E SETTER */
     public Film(){
@@ -97,6 +101,23 @@ public class Film {
 
     public void setRelease_year(Integer release_year) {
         this.release_year = release_year;
+    }
+
+
+    public java.util.List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(java.util.List<Category> categories) {
+        this.categories = categories;
+    }
+
+    public Director getDirector() {
+        return director;
+    }
+
+    public void setDirector(Director director) {
+        this.director = director;
     }
     
     
