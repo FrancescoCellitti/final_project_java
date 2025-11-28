@@ -23,7 +23,7 @@ import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/films")
-public class FilmRestController {
+public class FilmController {
     @Autowired
     private FilmRepository filmRepository;
     @Autowired
