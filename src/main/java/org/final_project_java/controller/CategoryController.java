@@ -23,11 +23,11 @@ public class CategoryController {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    @Getmapping 
+    @GetMapping
     public String index(Model model){
         List<Category> categories = categoryRepository.findAll();
         model.addAttribute(categories);
-        return "/category/index";
+        return "category/index";
     }
 
     @GetMapping("/{id}")
