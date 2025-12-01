@@ -2,7 +2,7 @@ package org.final_project_java.model;
 
 import java.util.List;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,9 +30,10 @@ public class Category {
 
     /* SEZIONE COLLEGAMENTI */
     @ManyToMany(mappedBy = "categories")
+    @JsonBackReference
     List<Film> films;
 
-
+    
 
 
     /* SEZIONE GETTER E SETTERS */
