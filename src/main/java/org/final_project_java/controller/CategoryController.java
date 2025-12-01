@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import jakarta.validation.Valid;
 
 @Controller
@@ -56,6 +54,35 @@ public class CategoryController {
         }
         categoryRepository.save(formCategory);
         return "redirect:/";
+    }
+
+    @GetMapping("/update/{id}")
+    public String update(@PathVariable ("id") Integer id, Model model){
+        Optional<Category> category = categoryRepository.findById(id);
+        if (category.isEmpty()) {
+            return "errors/404";
+        }
+        model.addAttribute("category", category.get());
+        return "category/update";
+    }
+
+    @PostMapping("/update{id}")
+    public String update(@PathVariable("id") Integer id,@Valid @ModelAttribute("category") Category formCategory,BindingResult bindingResults, Model model){
+        if (bindingResults.hasErrors()) {
+            return "category/update";
+        }
+        Optional<Category> category = categoryRepository.findById(id);
+        if (category.isEmpty()) {
+            return "category/update";
+        }
+        categoryRepository.save(formCategory);
+        return "redirect:/category";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id){
+        categoryRepository.deleteById(id);
+        return"redirect:/";
     }
     
 }
