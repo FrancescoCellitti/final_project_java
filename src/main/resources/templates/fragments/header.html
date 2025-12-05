@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<!-- Frammenti riutilizzabili: head e header -->
+<head th:fragment="head(title)">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title th:text="${title}">Film | Catalogo</title>
+  <link rel="stylesheet" th:href="@{/css/netflix.css}" />
+</head>
+
+<header th:fragment="header">
+  <div class="brand">FilmFlix</div>
+  <nav>
+    <a class="btn secondary" th:href="@{/films}">Catalogo</a>
+  </nav>
+  <div class="actions">
+    <a class="btn" th:href="@{/films/add}">Aggiungi Film</a>
+  </div>
+</header>
+</html>

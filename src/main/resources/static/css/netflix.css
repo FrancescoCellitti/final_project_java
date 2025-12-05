@@ -1,0 +1,31 @@
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+.nf-body { margin:0; background:#141414; color:#fff; font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; }
+.nf-header { position:sticky; top:0; padding:16px 24px; background:linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0)); backdrop-filter: blur(6px); }
+.brand { color:#e50914; font-weight:800; font-size:22px; letter-spacing:.5px; }
+.nf-container { padding:24px; }
+.nf-title { margin:0 0 16px; font-size:22px; }
+.nf-empty { color:#bbb; background:#1f1f1f; border:1px solid #2a2a2a; padding:16px; border-radius:8px; }
+.nf-table-wrap { overflow:auto; border-radius:8px; border:1px solid #2a2a2a; background:#1a1a1a; }
+.nf-table { width:100%; border-collapse:collapse; }
+.nf-table thead th { text-align:left; background:#1f1f1f; color:#ddd; padding:12px; font-weight:700; border-bottom:1px solid #2a2a2a; position:sticky; top:0; }
+.nf-table tbody td { padding:12px; border-bottom:1px solid #222; color:#eee; vertical-align:top; }
+.nf-table tbody tr:hover { background:#222; }
+.nf-table tbody tr:nth-child(even) { background:#191919; }
+.nf-table tbody tr:nth-child(even):hover { background:#212121; }
+```// filepath: c:\Users\franc\OneDrive\Desktop\final_project_films\final_project_java\src\main\resources\static\css\netflix.css
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+.nf-body { margin:0; background:#141414; color:#fff; font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; }
+.nf-header { position:sticky; top:0; padding:16px 24px; background:linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0)); backdrop-filter: blur(6px); }
+.brand { color:#e50914; font-weight:800; font-size:22px; letter-spacing:.5px; }
+.nf-container { padding:24px; }
+.nf-title { margin:0 0 16px; font-size:22px; }
+.nf-empty { color:#bbb; background:#1f1f1f; border:1px solid #2a2a2a; padding:16px; border-radius:8px; }
+.nf-table-wrap { overflow:auto; border-radius:8px; border:1px solid #2a2a2a; background:#1a1a1a; }
+.nf-table { width:100%; border-collapse:collapse; }
+.nf-table thead th { text-align:left; background:#1f1f1f; color:#ddd; padding:12px; font-weight:700; border-bottom:1px solid #2a2a2a; position:sticky; top:0; }
+.nf-table tbody td { padding:12px; border-bottom:1px solid #222; color:#eee; vertical-align:top; }
+.nf-table tbody tr:hover { background:#222; }
+.nf-table tbody tr:nth-child(even) { background:#191919; }
+.nf-table tbody tr:nth-child(even):hover { background:#212121; }

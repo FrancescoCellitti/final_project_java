@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Film | Elenco</title>
+  <link rel="stylesheet" th:href="@{/css/netflix.css}" />
+</head>
+<body class="nf-body">
+  <header class="nf-header">
+    <div class="brand">FilmFlix</div>
+  </header>
+
+  <main class="nf-container">
+    <h1 class="nf-title">Elenco Film</h1>
+
+    <div th:if="${#lists.isEmpty(films)}" class="nf-empty">
+      Nessun film presente.
+    </div>
+
+    <div th:if="${!#lists.isEmpty(films)}" class="nf-table-wrap">
+      <table class="nf-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Titolo</th>
+            <th>Descrizione</th>
+            <th>Durata (min)</th>
+            <th>Anno</th>
+            <th>Regista</th>
+            <th>Categorie</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="film : ${films}">
+            <td th:text="${film.id}">1</td>
+            <td th:text="${film.title}">Titolo</td>
+            <td th:text="${film.description}">Descrizione</td>
+            <td th:text="${film.duration_time}">120</td>
+            <td th:text="${film.release_year}">2024</td>
+            <td th:text="${film.director != null ? film.director.name : '—'}">Regista</td>
+            <td>
+              <span th:if="${film.categories == null || #lists.isEmpty(film.categories)}">—</span>
+              <span th:each="c, iStat : ${film.categories}">
+                <span th:text="${c.title}">Categoria</span><span th:if="${!iStat.last}">, </span>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</body>
+</html>

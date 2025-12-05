@@ -128,7 +128,7 @@ public class FilmController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable("id") Integer id){
         filmRepository.deleteById(id);
-        return "redirect:/";
+        return "redirect:/films";
     }
 
 }
