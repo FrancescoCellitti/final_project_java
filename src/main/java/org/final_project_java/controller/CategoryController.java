@@ -66,12 +66,8 @@ public class CategoryController {
     @PostMapping("/delete/{id}")
     @Transactional
     public String delete(@PathVariable("id") Integer id){
-        // stacca la categoria dai film prima di cancellare
-        List<Film> linked = filmRepository.findByCategories_Id(id);
-        for (Film f : linked) {
-            f.getCategories().removeIf(c -> c.getId().equals(id));
-            filmRepository.save(f);
-        }
+        // rimuovi i link nella tabella di join senza caricare i film
+        filmRepository.deleteCategoryLinks(id);
         categoryRepository.deleteById(id);
         return "redirect:/categories";
     }

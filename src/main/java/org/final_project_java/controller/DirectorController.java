@@ -63,13 +63,11 @@ public class DirectorController {
     public String delete(@PathVariable Integer id) {
         var d = directorRepository.findById(id).orElse(null);
         if (d == null) return "redirect:/director";
-        // stacca dai film prima di cancellare (serve director_id nullable in DB)
-        List<Film> films = filmRepository.findByDirector_Id(id);
-        for (Film f : films) {
-            f.setDirector(null);
-            filmRepository.save(f);
-        }
-        directorRepository.delete(d);
+
+        // stacca tutti i film senza triggerare Bean Validation
+        filmRepository.detachDirector(id);
+
+        directorRepository.deleteById(id);
         return "redirect:/director";
     }
 }
