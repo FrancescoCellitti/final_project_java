@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/navbar :: head('Registi | Elenco')}"></head>
+<body class="nf-body">
+  <header th:replace="~{fragments/navbar :: navbar}"></header>
+  <main class="nf-container">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+      <h1 class="nf-title">Elenco Registi</h1>
+      <a class="nf-btn nf-btn-danger" th:href="@{/director/add}">+ Crea nuovo</a>
+    </div>
+    <div th:if="${#lists.isEmpty(directors)}" class="nf-empty">Nessun regista presente.</div>
+    <div th:if="${!#lists.isEmpty(directors)}" class="nf-table-wrap">
+      <table class="nf-table">
+        <thead><tr><th>Nome</th><th>Cognome</th><th>Età</th><th>Azioni</th></tr></thead>
+        <tbody>
+          <tr th:each="d : ${directors}">
+            <td th:text="${d.name}">Nome</td>
+            <td th:text="${d.surname}">Cognome</td>
+            <td th:text="${d.age}">Età</td>
+            <td>
+              <a class="nf-btn nf-btn-secondary" th:href="@{'/director/' + ${d.id} + '/edit'}">Modifica</a>
+              <form th:action="@{'/director/' + ${d.id} + '/delete'}" method="post" style="display:inline;">
+                <button type="submit" class="nf-btn nf-btn-danger" onclick="return confirm('Eliminare?')">Elimina</button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</body>
+</html>

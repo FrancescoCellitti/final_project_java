@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/navbar :: head('Categoria | Modifica')}"></head>
+<body class="nf-body">
+  <header th:replace="~{fragments/navbar :: navbar}"></header>
+  <main class="nf-container" th:object="${category}">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+      <h1 class="nf-title">Modifica Categoria</h1>
+      <a class="nf-btn nf-btn-secondary" th:href="@{/categories}">← Elenco</a>
+    </div>
+    <form th:action="@{'/categories/update/' + *{id}}" method="post" class="nf-form">
+      <div class="nf-field">
+        <label>Titolo</label>
+        <input type="text" th:field="*{title}" required />
+        <div class="nf-error" th:errors="*{title}"></div>
+      </div>
+      <div class="nf-actions">
+        <a class="nf-btn nf-btn-secondary" th:href="@{/categories}">Annulla</a>
+        <button class="nf-btn nf-btn-danger" type="submit">Aggiorna</button>
+      </div>
+    </form>
+  </main>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/navbar :: head('Categorie | Elenco')}"></head>
+<body class="nf-body">
+  <header th:replace="~{fragments/navbar :: navbar}"></header>
+  <main class="nf-container">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+      <h1 class="nf-title">Categorie</h1>
+      <a class="nf-btn nf-btn-danger" th:href="@{/categories/add}">+ Crea nuovo</a>
+    </div>
+    <div th:if="${#lists.isEmpty(categories)}" class="nf-empty">Nessuna categoria.</div>
+    <div th:if="${!#lists.isEmpty(categories)}" class="nf-table-wrap">
+      <table class="nf-table">
+        <thead><tr><th>Titolo</th><th>Azioni</th></tr></thead>
+        <tbody>
+          <tr th:each="c : ${categories}">
+            <td th:text="${c.title}">Titolo</td>
+            <td>
+              <a class="nf-btn nf-btn-secondary" th:href="@{'/categories/update/' + ${c.id}}">Modifica</a>
+              <form th:action="@{'/categories/delete/' + ${c.id}}" method="post" style="display:inline;">
+                <button type="submit" class="nf-btn nf-btn-danger" onclick="return confirm('Eliminare?')">Elimina</button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</body>
+</html>

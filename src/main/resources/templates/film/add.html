@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/navbar :: head('Film | Aggiungi')}"></head>
+<body class="nf-body">
+  <header th:replace="~{fragments/navbar :: navbar}"></header>
+  <main class="nf-container">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+      <h1 class="nf-title">Aggiungi Film</h1>
+      <a class="nf-btn nf-btn-secondary" th:href="@{/films}">← Torna all’elenco</a>
+    </div>
+
+    <form th:action="@{/films/add}" th:object="${film}" method="post" class="nf-form">
+      <div class="nf-field">
+        <label>Titolo</label>
+        <input type="text" th:field="*{title}" required />
+        <div class="nf-error" th:errors="*{title}"></div>
+      </div>
+
+      <div class="nf-field">
+        <label>Descrizione</label>
+        <textarea th:field="*{description}" rows="4"></textarea>
+        <div class="nf-error" th:errors="*{description}"></div>
+      </div>
+
+      <div class="nf-field">
+        <label>Durata (min)</label>
+        <input type="number" th:field="*{duration_time}" min="1" max="600" required />
+        <div class="nf-error" th:errors="*{duration_time}"></div>
+      </div>
+
+      <div class="nf-field">
+        <label>Anno di uscita</label>
+        <input type="number" th:field="*{release_year}" min="1888" max="2100" required />
+        <div class="nf-error" th:errors="*{release_year}"></div>
+      </div>
+
+      <div class="nf-field">
+        <label>Regista</label>
+        <select th:field="*{director}" required>
+          <option value="" disabled selected>Seleziona un regista</option>
+          <option th:each="d : ${directors}" th:value="${d.id}" th:text="${d.name + ' ' + d.surname}"></option>
+        </select>
+        <div class="nf-error" th:errors="*{director}"></div>
+      </div>
+
+      <div class="nf-field">
+        <label>Categorie</label>
+        <select th:field="*{categories}" multiple size="5">
+          <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.title}"></option>
+        </select>
+        <div class="nf-error" th:errors="*{categories}"></div>
+      </div>
+
+      <div class="nf-actions">
+        <a class="nf-btn nf-btn-secondary" th:href="@{/films}">Annulla</a>
+        <button class="nf-btn nf-btn-danger" type="submit">Salva</button>
+      </div>
+    </form>
+  </main>
+</body>
+</html>

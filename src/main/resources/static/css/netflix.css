@@ -2,7 +2,11 @@
 * { box-sizing: border-box; }
 .nf-body { margin:0; background:#141414; color:#fff; font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; }
 .nf-header { position:sticky; top:0; padding:16px 24px; background:linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0)); backdrop-filter: blur(6px); }
+.nf-nav { display:flex; align-items:center; gap:16px; }
 .brand { color:#e50914; font-weight:800; font-size:22px; letter-spacing:.5px; }
+.nf-links { display:flex; gap:12px; margin-left:auto; }
+.nf-link { color:#ddd; text-decoration:none; padding:8px 10px; border-radius:4px; }
+.nf-link:hover { background:#2a2a2a; color:#fff; }
 .nf-container { padding:24px; }
 .nf-title { margin:0 0 16px; font-size:22px; }
 .nf-empty { color:#bbb; background:#1f1f1f; border:1px solid #2a2a2a; padding:16px; border-radius:8px; }
@@ -13,19 +17,17 @@
 .nf-table tbody tr:hover { background:#222; }
 .nf-table tbody tr:nth-child(even) { background:#191919; }
 .nf-table tbody tr:nth-child(even):hover { background:#212121; }
-```// filepath: c:\Users\franc\OneDrive\Desktop\final_project_films\final_project_java\src\main\resources\static\css\netflix.css
-:root { color-scheme: dark; }
-* { box-sizing: border-box; }
-.nf-body { margin:0; background:#141414; color:#fff; font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; }
-.nf-header { position:sticky; top:0; padding:16px 24px; background:linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0)); backdrop-filter: blur(6px); }
-.brand { color:#e50914; font-weight:800; font-size:22px; letter-spacing:.5px; }
-.nf-container { padding:24px; }
-.nf-title { margin:0 0 16px; font-size:22px; }
-.nf-empty { color:#bbb; background:#1f1f1f; border:1px solid #2a2a2a; padding:16px; border-radius:8px; }
-.nf-table-wrap { overflow:auto; border-radius:8px; border:1px solid #2a2a2a; background:#1a1a1a; }
-.nf-table { width:100%; border-collapse:collapse; }
-.nf-table thead th { text-align:left; background:#1f1f1f; color:#ddd; padding:12px; font-weight:700; border-bottom:1px solid #2a2a2a; position:sticky; top:0; }
-.nf-table tbody td { padding:12px; border-bottom:1px solid #222; color:#eee; vertical-align:top; }
-.nf-table tbody tr:hover { background:#222; }
-.nf-table tbody tr:nth-child(even) { background:#191919; }
-.nf-table tbody tr:nth-child(even):hover { background:#212121; }
+.nf-btn { display:inline-block; padding:8px 12px; border-radius:4px; text-decoration:none; font-weight:600; border:0; cursor:pointer; }
+.nf-btn-secondary { background:#2a2a2a; color:#eee; }
+.nf-btn-secondary:hover { background:#3a3a3a; color:#fff; }
+.nf-btn-danger { background:#e50914; color:#fff; }
+.nf-btn-danger:hover { background:#f6121d; color:#fff; }
+.nf-form { display:grid; gap:14px; max-width:720px; }
+.nf-field { display:flex; flex-direction:column; gap:6px; }
+.nf-field label { color:#ddd; font-weight:600; }
+.nf-field input, .nf-field textarea, .nf-field select {
+  background:#1f1f1f; border:1px solid #2a2a2a; color:#fff; padding:10px; border-radius:6px;
+}
+.nf-field textarea { resize:vertical; }
+.nf-actions { display:flex; gap:10px; margin-top:8px; }
+.nf-error { color:#ff6b6b; font-size:12px; }

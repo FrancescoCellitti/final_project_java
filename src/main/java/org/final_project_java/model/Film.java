@@ -15,9 +15,11 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.FetchType;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 @Entity
@@ -29,27 +31,28 @@ public class Film {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank(message = "title cannot be null")
+    @NotBlank(message = "Il titolo è obbligatorio")
     @Column(name = "title", nullable = false)
     private String title;
-
 
     @Lob
     private String description;
 
-    @NotBlank(message = "duration cannot be null")
-    @Positive(message = "duration_time must be greater than 0")
-    @Column(name = "duration_time", nullable = false)
+    @NotNull(message = "La durata è obbligatoria")
+    @Min(value = 1, message = "La durata deve essere almeno 1 minuto")
+    @Max(value = 600, message = "La durata non può superare 600 minuti")
+    @Column(name = "duration_time")
     private Integer duration_time;
 
-    @Min(value = 1888, message = "release_year must be >= 1888")
-    @Max(value = 2100, message = "release_year must be <= 2100")
+    @NotNull(message = "L'anno di uscita è obbligatorio")
+    @Min(value = 1888, message = "L'anno deve essere ≥ 1888")
+    @Max(value = 2100, message = "L'anno deve essere ≤ 2100")
     @Column(name = "release_year")
     private Integer release_year;
 
     /* SEZIONE COLLEGAMENTI */
-    @ManyToOne
-    @JoinColumn(name = "director_id", nullable = false)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "director_id", nullable = true)
     private Director director;
 
     @ManyToMany

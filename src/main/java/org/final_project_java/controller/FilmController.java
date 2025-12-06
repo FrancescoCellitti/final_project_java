@@ -3,6 +3,7 @@ package org.final_project_java.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.final_project_java.model.Category;
 import org.final_project_java.model.Director;
 import org.final_project_java.model.Film;
 import org.final_project_java.repository.CategoryRepository;
@@ -12,29 +13,68 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/films")
 public class FilmController {
+
     @Autowired
     private FilmRepository filmRepository;
     @Autowired
-    private CategoryRepository categoryRepository;
-    @Autowired
     private DirectorRepository directorRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @GetMapping("/add")
+    public String addForm(Model model) {
+        model.addAttribute("film", new Film());
+        model.addAttribute("directors", directorRepository.findAll());
+        model.addAttribute("categories", categoryRepository.findAll());
+        return "film/add";
+    }
+
+    @PostMapping("/add")
+    public String create(@Valid @ModelAttribute("film") Film film, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("directors", directorRepository.findAll());
+            model.addAttribute("categories", categoryRepository.findAll());
+            return "film/add";
+        }
+
+        // Risolvi Director
+        if (film.getDirector() != null && film.getDirector().getId() != null) {
+            directorRepository.findById(film.getDirector().getId()).ifPresent(film::setDirector);
+        } else {
+            model.addAttribute("directors", directorRepository.findAll());
+            model.addAttribute("categories", categoryRepository.findAll());
+            model.addAttribute("directorError", "Seleziona un regista valido.");
+            return "film/add";
+        }
+
+        // Risolvi Categories (select multiple con th:field="*{categories}")
+        if (film.getCategories() != null && !film.getCategories().isEmpty()) {
+            List<Category> resolved = film.getCategories().stream()
+                .map(c -> c.getId())
+                .filter(id -> id != null)
+                .map(id -> categoryRepository.findById(id))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toList();
+            film.setCategories(resolved);
+        } else {
+            film.setCategories(List.of());
+        }
+
+        filmRepository.save(film);
+        return "redirect:/films";
+    }
 
     @GetMapping
     public String index(Model model) {
-        List<Film> films = filmRepository.findAll();
-        model.addAttribute("films", films);
+        model.addAttribute("films", filmRepository.findAll());
         return "film/index";
     }
 
@@ -49,40 +89,6 @@ public class FilmController {
         return "film/show";
     }
 
-    @GetMapping("/add")
-    public String add(Model model){
-        model.addAttribute("film", new Film());
-        model.addAttribute("categories", categoryRepository.findAll());
-        model.addAttribute("directors", directorRepository.findAll());
-        return "film/add";
-    }
-
-    @PostMapping("/add")
-    public String create(@Valid @ModelAttribute("film") Film formFilm,
-                         BindingResult bindingResult,
-                         @RequestParam(value = "category", required= false) List<Integer> categoryIds, @RequestParam(value = "director", required = true) Integer director,
-                         Model model){
-        if(bindingResult.hasErrors()){
-            model.addAttribute("categories", categoryRepository.findAll());
-            model.addAttribute("director", directorRepository.findAll());
-            return "film/add";
-        }
-        formFilm.setCategories(categoryIds != null
-                ? categoryRepository.findAllById(categoryIds)
-                : List.of());
-       Optional<Director> dirOpt = directorRepository.findById(director);
-        if (dirOpt.isEmpty()) {
-            model.addAttribute("categories", categoryRepository.findAll());
-            model.addAttribute("director", directorRepository.findAll());
-            model.addAttribute("directorError", "Seleziona un regista valido.");
-            return "film/add";
-        }
-        formFilm.setDirector(dirOpt.get());
-        filmRepository.save(formFilm);
-        return "redirect:/films";
-    } 
-
-
     @GetMapping("/update/{id}")
     public String edit(@PathVariable("id") Integer id, Model model){
         Optional<Film> film = filmRepository.findById(id);
@@ -96,32 +102,40 @@ public class FilmController {
     }
 
    @PostMapping("/update/{id}")
-    public String update(@PathVariable("id") Integer id,
-                     @Valid @ModelAttribute("film") Film formFilm,
-                     BindingResult bindingResult,
-                     @RequestParam(value = "category", required = false) List<Integer> categoryIds,
-                     @RequestParam(value = "director", required = true) Integer directorId,
-                     Model model){
-        if (bindingResult.hasErrors()){
-            model.addAttribute("categories", categoryRepository.findAll());
+    public String update(@PathVariable Integer id, @Valid @ModelAttribute("film") Film film,
+                     BindingResult result, Model model) {
+        if (result.hasErrors()) {
             model.addAttribute("directors", directorRepository.findAll());
+            model.addAttribute("categories", categoryRepository.findAll());
             return "film/update";
         }
-        formFilm.setId(id);
-        formFilm.setCategories(categoryIds != null
-                ? categoryRepository.findAllById(categoryIds)
-                : List.of());
+        film.setId(id);
 
-        Optional<Director> dirOpt = directorRepository.findById(directorId);
-        if (dirOpt.isEmpty()) {
-            model.addAttribute("categories", categoryRepository.findAll());
+        // Risolvi Director
+        if (film.getDirector() != null && film.getDirector().getId() != null) {
+            directorRepository.findById(film.getDirector().getId()).ifPresent(film::setDirector);
+        } else {
             model.addAttribute("directors", directorRepository.findAll());
+            model.addAttribute("categories", categoryRepository.findAll());
             model.addAttribute("directorError", "Seleziona un regista valido.");
             return "film/update";
         }
-        formFilm.setDirector(dirOpt.get());
 
-        filmRepository.save(formFilm);
+        // Risolvi Categories (select multiple con th:field="*{categories}")
+        if (film.getCategories() != null && !film.getCategories().isEmpty()) {
+            List<Category> resolved = film.getCategories().stream()
+                .map(c -> c.getId())
+                .filter(id -> id != null)
+                .map(id -> categoryRepository.findById(id))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toList();
+            film.setCategories(resolved);
+        } else {
+            film.setCategories(List.of());
+        }
+
+        filmRepository.save(film);
         return "redirect:/films";
     }
 

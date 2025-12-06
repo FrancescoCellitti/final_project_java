@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title th:text="${title}">App</title>
+  <link rel="stylesheet" th:href="@{/css/netflix.css}" />
+</head>
+<body>
+  <header th:fragment="navbar" class="nf-header">
+    <div class="nf-nav">
+      <div class="brand">FilmFlix</div>
+      <nav class="nf-links">
+        <a class="nf-link" th:href="@{/}">Home</a>
+        <a class="nf-link" th:href="@{/films}">Film</a>
+        <a class="nf-link" th:href="@{/categories}">Categorie</a>
+        <a class="nf-link" th:href="@{/director}">Registi</a>
+      </nav>
+    </div>
+  </header>
+</body>
+</html>
