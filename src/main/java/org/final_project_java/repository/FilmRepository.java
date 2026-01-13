@@ -11,7 +11,7 @@ import java.util.List;
 public interface FilmRepository extends JpaRepository<Film, Integer> {
     List<Film> findByCategories_Id(Integer categoryId);
     List<Film> findByDirector_Id(Integer directorId);
-    List<Film> findByCategories_Id(Integer categoryId);
+    /* List<Film> findByCategories_Id(Integer categoryId); */
 
     @Modifying
     @Transactional
